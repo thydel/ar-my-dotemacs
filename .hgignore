@@ -1,0 +1,14 @@
+syntax: glob
+
+*~
+
+.git/
+.gitignore
+.hgremote
+.gitconfig
+.gitremote
+.gitfirstcommit
+.hgfirstcommit
+README.html
+.hgwebremote
+.hgwebpath
