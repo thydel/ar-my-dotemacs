@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+
+  vars:
+    dotemacs:
+      users:
+        example:                # user name
+          dir: my_dot_dir       # user dot files remote folder
+          elisp: my_elisp_dir   # user elisp files remote folder
+          volatil: basic        # which template to use for volatil ~/.emacs
+          stable: servers       # which template to use for stable dotemacs
+          file: my_dotemacs     # which file to use to generate stable dotemacs
+          files: my_elisp_files # user elisp files local folder
+        thy:                    # sane defaults apply
+
+  roles:
+    - .

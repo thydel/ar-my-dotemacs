@@ -1,2 +1,10 @@
 ---
-# defaults file for /home/thy/usr/thydel/ar-my-dotemacs
+
+# dynamic default via task
+#dotemacs_dir: ~/.{{ ansible_ssh_user }}
+dotemacs_elisp: elisp
+dotemacs_volatil: dotemacs
+dotemacs_stable: my-dotemacs
+dotemacs_file: dotemacs.el
+dotemacs_files: elisp
+

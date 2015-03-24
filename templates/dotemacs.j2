@@ -1,0 +1,6 @@
+; -*- mode: Emacs-Lisp; -*-
+
+(defvar local-dir "{{ local_dir }}")
+(setq load-path (append (list "." local-dir) load-path ))
+(load "{{ local_file }}")
+

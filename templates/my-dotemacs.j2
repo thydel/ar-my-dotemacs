@@ -1,0 +1,196 @@
+; -*- mode: Emacs-Lisp; -*-
+
+(setq visible-bell t)
+
+(when window-system (tool-bar-mode 0))
+
+(setq version-control t)
+(setq delete-old-versions t)
+
+;;;;;;;;;;;;;;;;
+
+(setq running-emacs-22+ (and (> emacs-major-version 22)(< emacs-major-version 23)))
+
+(setq x-select-enable-clipboard t)
+(if running-emacs-22+ (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
+
+;;;;;;;;;;;;;;;;
+
+(set-default 'header-line-format '((96 "%f") (server-name (" + " server-name))))
+(set-face-foreground 'header-line "red")
+
+(setq frame-title-format
+      '(multiple-frames
+	("%b" (server-name ("+" server-name)))
+	("" invocation-name "@" system-name (server-name ("+" server-name)))))
+
+;(cond ((equal server-name "epi") (set-face-foreground 'modeline "red")))
+
+;;;;;;;;;;;;;;;;
+
+(setq browse-url-browser-function 'browse-url-firefox)
+
+(when window-system
+  (set-frame-width (selected-frame) 132)
+  (set-frame-height (selected-frame) 48)
+)
+
+(progn
+  (add-to-list 'initial-frame-alist '(width  . 132))
+  (add-to-list 'initial-frame-alist '(height . 48))
+  (add-to-list 'default-frame-alist '(width  . 132))
+  (add-to-list 'default-frame-alist '(height . 48)))
+
+(defun epi ()
+  (set-variable 'server-name "epi")
+  (server-start))
+
+(defun thy ()
+  (set-variable 'server-name "thy")
+  (server-start))
+
+(defun sroot ()
+  (set-variable 'server-name "root")
+  (server-start))
+
+
+(setq inhibit-startup-message t)
+
+(defun reload-ssh-env () (interactive) (load-file "~/.ssh.el"))
+(defun my-buffer-file-name () (interactive) (describe-variable 'buffer-file-name))
+
+;;;;;;;;;;;;;;;;
+
+(progn
+  (global-set-key "\C-x\C-b" 'electric-buffer-list)
+  (global-set-key "%" 'goto-match-paren)
+
+  (global-set-key "\C-o" (make-keymap))
+
+  (global-set-key "\C-o\C-b" 'ibuffer)
+
+  (global-set-key "\C-o\C-f" 'global-font-lock-mode)
+
+  (global-set-key "\C-o\C-i" 'text-scale-decrease)
+  (global-set-key "\C-o\C-p" 'text-scale-increase)
+
+  (global-set-key "\C-o\C-g" 'revert-buffer)
+  (global-set-key "\C-o\C-o" 'open-line)
+
+  (global-set-key "\C-o\C-m" 'mmm-parse-buffer)
+
+  (global-set-key "\C-o\C-h" 'menu-bar-mode)
+  (global-set-key "\C-o\C-e" 'menu-bar-enable-clipboard)
+  (global-set-key "\C-o\C-c" 'clipboard-kill-ring-save)
+  (global-set-key "\C-o\C-v" 'clipboard-yank)
+
+  (global-set-key "\C-o\C-r" 'point-to-register)
+  (global-set-key "\C-o\C-j" 'jump-to-register)
+
+  (global-set-key "\C-o\C-h" 'reload-ssh-env)
+  (global-set-key "\C-o\C-n" 'my-buffer-file-name)
+
+  (global-set-key "\C-oa" 'auto-fill-mode)
+  (global-set-key "\C-ob" 'bury-buffer)
+  (global-set-key "\C-oc" 'compile)
+  (global-set-key "\C-od" 'apt-utils-show-package)
+  (global-set-key "\C-oe" 'add-change-log-entry)
+  (global-set-key "\C-of" 'fill-region)
+  (global-set-key "\C-og" 'grep)
+  (global-set-key "\C-oh" t)
+  (global-set-key "\C-oi" 'send-invisible)
+  (global-set-key "\C-oj" t)
+  (global-set-key "\C-ok" 'kill-compilation)
+  (global-set-key "\C-ol" 'goto-line)
+  (global-set-key "\C-om" 'man)
+  (global-set-key "\C-on" t)
+  (global-set-key "\C-oo" 'wdired-change-to-wdired-mode)
+  (global-set-key "\C-op" 'transpose-chars)
+  (global-set-key "\C-oq" 'todo-show)
+  (global-set-key "\C-or" 'rename-buffer)
+  (global-set-key "\C-os" 'shell)
+  (global-set-key "\C-ot" 'toggle-truncate-lines)
+  (global-set-key "\C-ou" t)
+  (global-set-key "\C-ov" t)
+;  (global-set-key "\C-ow" 'toggle-rot13-mode)
+  (global-set-key "\C-ow" 'mouse-wheel-mode)
+  (global-set-key "\C-oy" t)
+  (global-set-key "\C-oz" 'xterm-mouse-mode)
+
+  (global-set-key "\C-o0" 'isearch-forward)
+  (global-set-key "\C-o1" 'query-replace)
+  (global-set-key "\C-o2" 'query-replace-regexp)
+  (global-set-key "\C-o3" 'replace-string)
+  (global-set-key "\C-o4" 'replace-regexp)
+  (global-set-key "\C-o5" 'edit-last-kbd-macro)
+
+  (global-set-key "\C-o'" 'iso-accents-mode)
+  (global-set-key "\C-o/" 'shell-filename-complete)
+  (global-set-key "\C-o=" 'scroll-left)
+  (global-set-key "\C-o-" 'scroll-right)
+
+;  (global-set-key (kbd "<mouse-4>") 'down-slightly)
+;  (global-set-key (kbd "<mouse-5>") 'up-slightly)
+;  (global-set-key (kbd "<mouse-4>") 'next-line)
+;  (global-set-key (kbd "<mouse-5>") 'previous-line)
+  (global-set-key (kbd "<mouse-4>") 'mwheel-scroll)
+  (global-set-key (kbd "<mouse-5>") 'mwheel-scroll)
+
+  t
+  )
+
+;;;;;;;;;;;;;;;;
+
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+     (global-set-key "\C-cl" 'org-store-link)
+     (global-set-key "\C-ca" 'org-agenda)
+     (global-set-key "\C-cb" 'org-iswitchb)
+
+;;;;;;;;;;;;;;;;
+
+(autoload 'shell-filename-complete "filecomp" t)
+(autoload 'goto-match-paren "goto-match-paren" t)
+
+;;;;;;;;;;;;;;;;
+
+(load "dired")
+
+(load "dired-add")
+
+(require 'dired-x)
+(setq-default dired-omit-files-p t)
+(setq dired-local-variables-file ".dired")
+
+(define-key dired-mode-map "\C-o" nil)
+(define-key dired-mode-map "\M-\C-o" 'dired-display-file)
+(define-key dired-mode-map "\C-\M-y" 'dired-do-load)
+
+
+(load "erin")
+
+(require 'mouse)
+(require 'mwheel)
+
+;; https://bugs.launchpad.net/ubuntu/+source/ccrypt/+bug/541947
+;; (setq load-path (cons "/usr/share/emacs/site-lisp/ccrypt" load-path))
+;; (require 'jka-compr-ccrypt "jka-compr-ccrypt.el")
+
+;; http://sourceforge.net/tracker/index.php?func=detail&aid=1538826&group_id=40913&atid=429289
+(require 'ps-ccrypt "ps-ccrypt.el")
+
+
+(setq-default ispell-program-name "aspell")
+
+(require 'generic-x)
+
+(autoload 'adoc-mode "adoc-mode")
+
+(require 'jinja2-mode)
+
+; http://www.emacswiki.org/emacs/TrampMode
+
+(setq tramp-default-method "ssh")
+
+
+(require 'generic-x)
+(add-to-list 'auto-mode-alist '("\\..*ignore$" . hosts-generic-mode))
