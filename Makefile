@@ -1,5 +1,7 @@
 top:; @date
 
+SHELL := bash
+
 Makefile:;
 
 pipe := BEGIN { m = "^\#pipe$$" }
@@ -12,7 +14,7 @@ self := dotemacs
 
 .stone: $(self)-role.yml; awk '$(pipe)' $<
 
-. := $(or $(host),$(error host must be define))
+. := $(and $(filter $(MAKECMDGOALS),main),$(host),$(error host must be define))
 
 main = ansible-playbook -i $(host), $(self)-play.yml $(AUSER) $(CHECK) $(DIFF) $(VERB)
 
@@ -36,3 +38,17 @@ verb     := VERB  := -v
 ifdef user
 AUSER             := -u $(user)
 endif
+
+################
+
+space :=
+space +=
+
+help.txt := \tmake help\n
+help.txt += \tmake main [$(subst $(space),|,$(vartar))] [user=USER] host=HOST
+
+help := echo -e "$(help.txt)"
+
+help:; @$($@)
+
+.PHONY: help
