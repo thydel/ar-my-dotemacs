@@ -108,7 +108,7 @@
   (global-set-key "\C-op" 'transpose-chars)
   (global-set-key "\C-oq" 'todo-show)
   (global-set-key "\C-or" 'rename-buffer)
-  (global-set-key "\C-os" 'shell)
+  (global-set-key "\C-os" 'myshell)
   (global-set-key "\C-ot" 'toggle-truncate-lines)
   (global-set-key "\C-ou" t)
   (global-set-key "\C-ov" t)
@@ -156,6 +156,8 @@
 (load "dired")
 
 (load "dired-add")
+
+(load "myshell")
 
 (require 'dired-x)
 (setq-default dired-omit-files-p t)

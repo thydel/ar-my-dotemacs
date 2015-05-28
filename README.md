@@ -27,6 +27,12 @@ Including an example of how to use your role (for instance, with variables passe
       roles:
          - { role: username.rolename, x: 42 }
 
+Example Invocation
+------------------
+
+ansible-playbook -i localhost, -c local dotemacs-play.yml --diff
+ansible-playbook -i tde-wsp4, dotemacs-play.yml --diff --check
+
 License
 -------
 

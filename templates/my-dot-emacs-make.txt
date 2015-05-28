@@ -7,6 +7,9 @@
 (setq version-control t)
 (setq delete-old-versions t)
 
+(defvar local-dir "~/.thy/elisp")
+(setq load-path (append (list "." local-dir) load-path ))
+
 ;;;;;;;;;;;;;;;;
 
 (setq running-emacs-22+ (and (> emacs-major-version 22)(< emacs-major-version 23)))
@@ -30,10 +33,73 @@
 
 (setq browse-url-browser-function 'browse-url-firefox)
 
+;;ifdef(`BIG',`
+;;(setq my-font "Monospace-11")
+;;',`
+;;(setq my-font "Monospace-13")
+;;')
+;;(setq my-font "Monospace-9")
+
+;;(when window-system
+;;  (setq
+;;   my-font
+;;   (cond
+;;    ((equal system-name "thy.liancourt.gnet") "Monospace-9")
+;;    ((equal system-name "thy-key") "Monospace-9")
+;;    ((equal system-name "thyp") "Monospace-9")
+;;    ((equal system-name "thyz") "Monospace-8")
+;;    ((equal system-name "ubuntu.liancourt.gnet") "Monospace-9")
+;;    ((> (x-display-pixel-width) 1600) "Monospace-13")
+;;    ((< (x-display-pixel-width) 1024) "Monospace-9")
+;;    (t "Monospace-9")
+;;    (t "Monospace-11")
+;;    ))
+;;
+;;  (set-frame-width
+;;   (selected-frame)
+;;   (cond
+;;    ((equal system-name "thyz") 120)
+;;    (t 132)
+;;    ))
+;;
+;;(set-frame-width (selected-frame) 132)
+;;
+;;  (set-frame-height
+;;   (selected-frame)
+;;   (cond
+;;    ((equal system-name "thy.liancourt.gnet") 46)
+;;    ((equal system-name "thy-key") 46)
+;;    ((equal system-name "thyp") 46)
+;;    ((equal system-name "thyz") 28)
+;;    ((equal system-name "ubuntu.liancourt.gnet") 46)
+;;    ((>= (x-display-pixel-height) 1200) 60)
+;;    ((<= (x-display-pixel-height) 600) 42)
+;;    (t 40)
+;;    (t 48)
+;;    ))
+;;  )
+;;
+;;  (set-frame-height (selected-frame) 40)
+;;
+;;(if (and (> emacs-major-version 22) window-system)
+;;    (progn
+;;      (set-default-font my-font)
+;;      )
+;;  )
+
 (when window-system
   (set-frame-width (selected-frame) 132)
   (set-frame-height (selected-frame) 48)
 )
+
+;; emacs --daemon=thy
+;; emacs --daemon=root
+;;
+;; emacsclient -s thy -c
+;; emacsclient -s thy -t
+;;
+;; sudo emacsclient -s root -c
+;; sudo emacsclient -s root -t
 
 (progn
   (add-to-list 'initial-frame-alist '(width  . 132))
@@ -108,7 +174,7 @@
   (global-set-key "\C-op" 'transpose-chars)
   (global-set-key "\C-oq" 'todo-show)
   (global-set-key "\C-or" 'rename-buffer)
-  (global-set-key "\C-os" 'myshell)
+  (global-set-key "\C-os" 'shell)
   (global-set-key "\C-ot" 'toggle-truncate-lines)
   (global-set-key "\C-ou" t)
   (global-set-key "\C-ov" t)
@@ -157,8 +223,6 @@
 
 (load "dired-add")
 
-(load "myshell")
-
 (require 'dired-x)
 (setq-default dired-omit-files-p t)
 (setq dired-local-variables-file ".dired")
@@ -193,6 +257,89 @@
 
 (setq tramp-default-method "ssh")
 
+; aptitude install mmm-mode
+
+(require 'mmm-mode)
+(require 'mmm-auto)
+(setq mmm-global-mode 'guess)
+
+(mmm-add-classes
+ '((embedded-rst
+    :submode rst-mode
+    :face mmm-declaration-submode-face
+    :front "^ *\\.\\. {"
+    :back "^ *\\.\\. }")))
+
+(mmm-add-classes
+ '((embedded-yaml
+    :submode yaml-mode
+    :face mmm-declaration-submode-face
+    :front "^---$"
+    :back "^\\.\\.\\.$")))
+
+(mmm-add-classes
+ '((embedded-m4
+    :submode m4-mode
+    :face mmm-declaration-submode-face
+    :front "^ *ifelse\(start\)"
+    :back "^ *ifelse\(end\)")))
+
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 (require 'generic-x)
 (add-to-list 'auto-mode-alist '("\\..*ignore$" . hosts-generic-mode))
+
+;;(custom-set-variables
+;; ;; custom-set-variables was added by Custom.
+;; ;; If you edit it by hand, you could mess it up, so be careful.
+;; ;; Your init file should contain only one such instance.
+;; ;; If there is more than one, they won't work right.
+;; '(safe-local-variable-values
+;;   (quote
+;;    ((electric-indent-mode)
+;;     (dired-omit-files . "\\.html$")
+;;     (dired-omit-files . "^[[:digit:]]\\{3\\}\\|^upgrades.yml$")
+;;     (dired-omit-files . "^[[:digit:]]\\{3\\}|upgrades.yml")
+;;     (dired-omit-files . "\\.yml$")
+;;     (dired-omit-files . "\\.gitconfig|\\.gitremote$")
+;;     (dired-omit-files . "\\.git..*|\\.hg..*$")
+;;     (TeX-master . t)
+;;     (dired-omit-files . "\\.svg$")
+;;     (dired-omit-files . "^try.*")
+;;     (dired-omit-files . "yaml\\.rst$\\|yaml\\.rst\\..*$\\|mail\\.yaml$\\|notes.yaml$")
+;;     (dired-omit-files . "yaml\\.rst$\\|\\.html$")
+;;     (dired-omit-files . "\\.log$\\|\\.aux$\\|\\.tns$")
+;;     (encoding . utf-8)
+;;     (dired-omit-files . "/")
+;;     (mmm-classes embedded-yaml)
+;;     (dired-omit-mode . t)
+;;     (dired-omit-files . "^[[:digit:]]\\{3\\}")
+;;     (dired-omit-files . "yml\\.rst$\\|yml\\.rst\\..*$\\|mail\\.yml$\\|notes.yml$")
+;;     (dired-omit-files . "yml\\.rst$\\|\\.html$")
+;;     (dired-omit-mode)
+;;     (mmm-classes embedded-rst embedded-m4)
+;;     (mmm-classes . embedded-rst)
+;;     (todo-categories "Todo" "Todo" "Todo" "Todo")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+    ((dired-omit-files . "^[[:digit:]]\\{3\\}")
+     (dired-omit-files . "yaml\\.rst$\\|yaml\\.rst\\..*$\\|mail\\.yaml$\\|notes.yaml$")
+     (dired-omit-files . "yaml\\.rst$\\|\\.html$")
+     (dired-omit-files . "yml\\.rst$\\|\\.html$")
+     (mmm-classes embedded-rst embedded-m4)
+     (dired-omit-files . "\\.html$")))))
