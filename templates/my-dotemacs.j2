@@ -196,3 +196,21 @@
 
 (require 'generic-x)
 (add-to-list 'auto-mode-alist '("\\..*ignore$" . hosts-generic-mode))
+
+;; melpa
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
+
+;; ssh-config-mode
+
+  (add-to-list 'auto-mode-alist '(".ssh/config\\'"       . ssh-config-mode))
+  (add-to-list 'auto-mode-alist '("sshd?_config\\'"      . ssh-config-mode))
+  (add-to-list 'auto-mode-alist '("known_hosts\\'"       . ssh-known-hosts-mode))
+  (add-to-list 'auto-mode-alist '("authorized_keys2?\\'" . ssh-authorized-keys-mode))
+  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)

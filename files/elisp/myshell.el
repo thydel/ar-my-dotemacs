@@ -1,16 +1,16 @@
 
 (defun myshell (&optional buffer)
   "Call `shell', auto naming buffer from either current directory
-of (dired or file name) or provided name. If prefixed generate
-new unique buffer name, If prefixes twice use default `*shell*'"
+of (dired or file name) or provided name. If prefixed use default
+`*shell*', if prefixes twice generate new unique buffer name"
   (interactive
    (cond
-    ((equal current-prefix-arg '(4))
+    ((equal current-prefix-arg '(16))
      (list
       (read-buffer
        "Shell Buffer: "
        (generate-new-buffer-name (mk-shell-buffer-name)))))
-    ((equal current-prefix-arg '(16)) (list "*shell*"))))
+    ((equal current-prefix-arg '(4)) (list "*shell*"))))
   (shell (or buffer (mk-shell-buffer-name))))
 
 (defun mk-shell-buffer-name ()
