@@ -4,3 +4,31 @@
 (setq load-path (append (list "." local-dir) load-path ))
 (load "{{ local_file }}")
 
+;; warning, retrofitted dynamic part, should use lineinfile or augea for .emacs itself
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+    ((dired-omit-files . "\\.log$\\|\\.aux$\\|\\.tns$")
+     (dired-omit-files . "/")
+     (mmm-classes . embedded-rst)
+     (dired-omit-files . "\\.yml$")
+     (dired-omit-files . "^[[:digit:]]\\{3\\}\\|^upgrades.yml$")
+     (dired-omit-files . "^try.*")
+     (eval add-custom-keyw)
+     (dired-omit-files . "yaml\\.rst$\\|yaml\\.rst\\..*$\\|mail\\.yaml$\\|notes.yaml$")
+     (dired-omit-files . "yaml\\.rst$\\|\\.html$")
+     (dired-omit-files . "yml\\.rst$\\|\\.html$")
+     (dired-omit-files . "^[[:digit:]]\\{3\\}")
+     (dired-omit-files . "yml\\.rst$\\|yml\\.rst\\..*$\\|mail\\.yml$\\|notes.yml$")
+     (mmm-classes embedded-rst embedded-m4)
+     (dired-omit-files . "\\.html$")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
