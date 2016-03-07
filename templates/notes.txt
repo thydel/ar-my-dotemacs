@@ -1,0 +1,2 @@
+;; (select-active-regions (quote only))
+(select-active-regions (quote only))
