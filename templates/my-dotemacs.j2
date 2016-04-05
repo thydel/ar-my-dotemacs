@@ -32,6 +32,12 @@
 
 ;;;;;;;;;;;;;;;;
 
+(setq comint-password-prompt-regexp
+      (concat comint-password-prompt-regexp
+	      "\\|^SUDO password: "))
+
+;;;;;;;;;;;;;;;;
+
 (setq browse-url-browser-function 'browse-url-firefox)
 
 (when window-system
