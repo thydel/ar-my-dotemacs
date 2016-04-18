@@ -1,5 +1,9 @@
 ; -*- mode: Emacs-Lisp; -*-
 
+; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+(setq garbage-collection-messages t)
+(setq gc-cons-threshold 100000000)
+
 (setq visible-bell t)
 
 (when window-system (tool-bar-mode -1)(scroll-bar-mode -1))
@@ -78,6 +82,7 @@
   (global-set-key "\C-o" (make-keymap))
 
   (global-set-key "\C-o\C-b" 'ibuffer)
+  (global-set-key "\C-o\C-c" 'garbage-collect)
 
   (global-set-key "\C-o\C-f" 'global-font-lock-mode)
 
