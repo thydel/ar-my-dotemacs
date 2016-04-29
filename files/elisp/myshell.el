@@ -17,6 +17,8 @@ of (dired or file name) or provided name. If prefixed use default
   (cond
    ((eq major-mode 'shell-mode)
     (replace-regexp-in-string "<.*>" "" (buffer-name)))
+   ((eq major-mode 'term-mode)
+    (concat "$" (file-name-nondirectory (directory-file-name (cadr (split-string (pwd)))))))
    ((or dired-directory buffer-file-name)
     (concat
      "$"

@@ -2,6 +2,8 @@
 
 (defun mk-term-buffer-name ()
   (cond
+   ((eq major-mode 'shell-mode)
+    (concat "term " (file-name-nondirectory (directory-file-name (cadr (split-string (pwd)))))))
    ((or dired-directory buffer-file-name)
     (concat
      "term "
