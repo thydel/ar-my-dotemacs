@@ -19,6 +19,27 @@
 (if running-emacs-22+ (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
 
 ;;;;;;;;;;;;;;;;
+; 
+; googled timeout waiting for property-notify event
+; found	http://emacs.1067599.n5.nabble.com/bug-13486-24-2-92-large-X-selections-timed-out-waiting-for-property-notify-event-td275798.html#a286215
+;
+;; I don't think there's any way to fix this; you will have to customize `select-active-regions' to nil.
+;; 
+;; I've been hitting this for months (since 24?) and finally
+;; searched around and found this thread.  I'm also running remote,
+;; using nx-client.  I went to customize select-active-regions and
+;; found the value "ony shift-selection or mouse-drag" does the
+;; trick since it still allows automatic setting of active region
+;; but doesn't trigger on things like mark-whole-buffer, which was
+;; killing me.
+;; 
+;; The elisp version it put in my init.el was (select-active-regions (quote only)).
+;
+; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Primary-Selection.html
+
+(select-active-regions 'only)
+
+;;;;;;;;;;;;;;;;
 
 (set-default 'header-line-format '((96 "%f") (server-name (" + " server-name))))
 (set-face-foreground 'header-line "red")
