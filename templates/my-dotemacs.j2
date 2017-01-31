@@ -206,6 +206,11 @@
 (define-key dired-mode-map "\C-\M-y" 'dired-do-load)
 
 
+(add-to-list 'load-path "/path/to/jq-mode-dir")
+(autoload 'jq-mode "jq-mode.el"
+    "Major mode for editing jq files" t)
+(add-to-list 'auto-mode-alist '("\\.jq$" . jq-mode))
+
 (load "erin")
 
 (require 'mouse)
