@@ -14,9 +14,9 @@ self := dotemacs
 
 .stone: $(self)-role.yml; awk '$(pipe)' $<
 
-. := $(and $(filter $(MAKECMDGOALS),main),$(host),$(error host must be define))
+. := $(if $(filter $(MAKECMDGOALS),main),$(or $(host),$(error host must be define)))
 
-main = ansible-playbook -i $(host), $(self)-play.yml $(AUSER) $(CHECK) $(DIFF) $(VERB)
+main = $(self)-play.yml -i $(host), $(AUSER) $(CHECK) $(DIFF) $(VERB)
 
 main: .stone; $($@)
 
@@ -45,7 +45,7 @@ space :=
 space +=
 
 help.txt := \tmake help\n
-help.txt += \tmake main [$(subst $(space),|,$(vartar))] [user=USER] host=HOST
+help.txt += \tmake [$(subst $(space),|,$(vartar))] main [user=USER] host=HOST
 
 help := echo -e "$(help.txt)"
 

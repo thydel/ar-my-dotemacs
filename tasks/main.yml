@@ -2,53 +2,67 @@
 
 - assert:
     that:
-      - ansible_ssh_user != 'root'
-      - dotemacs.users[ansible_ssh_user] is defined
+      - ansible_user_id != 'root'
+      - dotemacs.users[ansible_user_id] is defined
 
 - set_fact:
-    dir: ~/.{{ dotemacs.users[ansible_ssh_user].dir | default(ansible_ssh_user) }}
-    elisp: |
-      {{ dotemacs.users[ansible_ssh_user].elisp | default(dotemacs_elisp) }}
-    volatil: |
-      {{ dotemacs.users[ansible_ssh_user].volatil | default(dotemacs_volatil) }}.j2
-    stable: |
-      {{ dotemacs.users[ansible_ssh_user].stable | default(dotemacs_stable) }}.j2
-    file: |
-      {{ dotemacs.users[ansible_ssh_user].file | default(dotemacs_file) }}
-    files: |
-      {{ dotemacs.users[ansible_ssh_user].files | default(dotemacs_files) }}
+    dir: ~/.{{ dotemacs.users[ansible_user_id].dir | default(ansible_user_id) }}
+    elisp: |-
+      {{ dotemacs.users[ansible_user_id].elisp | default(dotemacs_elisp) }}
+    volatil: |-
+      {{ dotemacs.users[ansible_user_id].volatil | default(dotemacs_volatil) }}.j2
+    stable: |-
+      {{ dotemacs.users[ansible_user_id].stable | default(dotemacs_stable) }}.j2
+    file: |-
+      {{ dotemacs.users[ansible_user_id].file | default(dotemacs_file) }}
+    files: |-
+      {{ dotemacs.users[ansible_user_id].files | default(dotemacs_files) }}
 
-- name: dotemacs - our dot dir
-  file: path={{ dir }} state=directory
+- name: our dot dir
+  file:
+    path: '{{ dir }}'
+    state: directory
 
-- name: dotemacs - allow check mode
-  file: path={{ dir }} state=directory
+- name: allow check mode
+  file:
+    path: '{{ dir }}'
+    state: directory
   register: dirp
 
 - set_fact: { dir_created: "{{ not dirp.changed }}" }
 
-- name: dotemacs - our elisp dir
-  file: path={{ dir }}/{{ elisp }} state=directory
+- name: our elisp dir
+  file:
+    path: '{{ dir }}/{{ elisp }}'
+    state: directory
   when: dir_created
   
-- name: dotemacs - allow check mode
-  file: path={{ dir }}/{{ elisp }} state=directory
+- name: allow check mode
+  file:
+    path: '{{ dir }}/{{ elisp }}'
+    state: directory
   register: elispp
 
 - set_fact: { elisp_created: "{{ not elispp.changed }}" }
 
 - set_fact:
-    local_dir: |
+    local_dir: |-
       {{ dir }}/{{ elisp }}
-    local_file: |
+    local_file: |-
       {{ dir }}/{{ file }}
       
-- name: dotemacs - install volatil template
-  template: src={{ volatil }} dest=~/.emacs
+- name: install volatil template
+  template:
+    src: '{{ volatil }}'
+    dest: ~/.emacs
 
-- name: dotemacs - install stable template
-  template: src={{ stable }} dest={{ dir }}/{{ file }}
+- name: install stable template
+  template:
+    src: '{{ stable }}'
+    dest: '{{ dir }}/{{ file }}'
 
-- name: dotemacs - install elisp files
-  copy: src={{ files }}/ dest={{ dir }}/{{ elisp }}/
+- name: install elisp files
+  copy:
+    src: '{{ files }}/'
+    dest: '{{ dir }}/{{ elisp }}/'
     
