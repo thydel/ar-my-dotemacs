@@ -6,7 +6,12 @@
 
 (setq visible-bell t)
 
-(when window-system (tool-bar-mode -1)(scroll-bar-mode -1))
+;; (when window-system (tool-bar-mode -1)(scroll-bar-mode -1))
+(defun my-after-make-frame (frame)
+  (if (functionp 'tool-bar-mode)
+      (progn (tool-bar-mode -1)(scroll-bar-mode -1))))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions 'my-after-make-frame))
 
 (setq version-control t)
 (setq delete-old-versions t)
