@@ -15,5 +15,4 @@
           files: my_elisp_files # user elisp files local folder
         thy:                    # sane defaults apply
 
-  roles:
-    - .
+  roles: [ self ]
