@@ -16,6 +16,8 @@
 (setq version-control t)
 (setq delete-old-versions t)
 
+(if (> emacs-major-version 24)(setq comint-use-prompt-regexp "^.*\\$"))
+
 ;;;;;;;;;;;;;;;;
 
 (setq running-emacs-22+ (and (> emacs-major-version 22)(< emacs-major-version 23)))
