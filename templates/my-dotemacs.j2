@@ -18,6 +18,10 @@
 
 (if (> emacs-major-version 24)(setq comint-use-prompt-regexp "^[^ ]*[\\$#]"))
 
+;; requires '{ "TERM":"xterm-256", CHROMEBOOKS:"cb5" }' in chrome secure shell profile on client
+;; and 'AcceptEnv CHROMEBOOK' in '/etc/ssh/sshd_config'on server
+(if (equal (getenv "CHROMEBOOK" "cb5")) (keyboard-translate ?\C-h ?\C-?))
+
 ;;;;;;;;;;;;;;;;
 
 (setq running-emacs-22+ (and (> emacs-major-version 22)(< emacs-major-version 23)))
