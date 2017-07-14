@@ -20,7 +20,7 @@
 
 ;; requires '{ "TERM":"xterm-256", CHROMEBOOKS:"cb5" }' in chrome secure shell profile on client
 ;; and 'AcceptEnv CHROMEBOOK' in '/etc/ssh/sshd_config'on server
-(if (equal (getenv "CHROMEBOOK" "cb5")) (keyboard-translate ?\C-h ?\C-?))
+(if (equal (getenv "CHROMEBOOK") "cb5") (keyboard-translate ?\C-h ?\C-?))
 
 ;;;;;;;;;;;;;;;;
 
@@ -145,7 +145,7 @@
   (global-set-key "\C-oe" 'add-change-log-entry)
   (global-set-key "\C-of" 'fill-region)
   (global-set-key "\C-og" 'grep)
-  (global-set-key "\C-oh" t)
+  (global-set-key "\C-oh" 'help)
   (global-set-key "\C-oi" 'send-invisible)
   (global-set-key "\C-oj" t)
   (global-set-key "\C-ok" 'kill-compilation)
