@@ -52,7 +52,11 @@
 
 ;;;;;;;;;;;;;;;;
 
-(set-default 'header-line-format '((96 "%f") (server-name (" + " server-name))))
+(cond ((equal (getenv "HOST") "zbox2")
+       (set-default 'header-line-format '((72 "%f") (server-name (" + " server-name)))))
+      (t
+       (set-default 'header-line-format '((96 "%f") (server-name (" + " server-name))))))
+
 (set-face-foreground 'header-line "red")
 
 (setq frame-title-format
@@ -64,7 +68,10 @@
 
 ;;;;;;;;;;;;;;;;
 
-(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=14:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" ))
+(cond ((equal (getenv "HOST") "zbox2")
+       (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=12:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" )))
+      (t
+       (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=14:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" ))))
 
 ;;;;;;;;;;;;;;;;
 
