@@ -84,8 +84,8 @@ hitting screen's max DCS length."
 		                'osc52-select-text))))
 
 ;; orig
-;; (defun osc52-set-cut-function () (setq interprogram-cut-function 'gui-select-text)
+;; (defun osc52-set-cut-function () (setq interprogram-cut-function 'gui-select-text))
 ;; emacs
-;; (defun osc52-set-cut-function () (setq interprogram-cut-function 'osc52-select-text)
+;; (defun osc52-set-cut-function () (setq interprogram-cut-function 'osc52-select-text))
 ;; screen
-(defun osc52-set-cut-function () (setq interprogram-cut-function 'osc52-select-text-dcs)
+(defun osc52-set-cut-function () (setq interprogram-cut-function 'osc52-select-text-dcs))
