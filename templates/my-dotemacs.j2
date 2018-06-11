@@ -69,10 +69,13 @@
 
 ;;;;;;;;;;;;;;;;
 
-(cond ((equal (getenv "HOST") "zbox2")
-       (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=12:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" )))
-      (t
-       (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=14:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" ))))
+(cond
+ ((equal (getenv "HOST") "zbox2")
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=12:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" )))
+ ((equal (getenv "HOST") "tde-ws")
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12" )))
+ (t
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono:pixelsize=14:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true" ))))
 
 ;;;;;;;;;;;;;;;;
 
