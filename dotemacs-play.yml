@@ -14,5 +14,6 @@
           file: my_dotemacs     # which file to use to generate stable dotemacs
           files: my_elisp_files # user elisp files local folder
         thy:                    # sane defaults apply
+        thierrymdelamare:
 
   roles: [ self ]
