@@ -6,6 +6,8 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(setq dotspacemacs-elpa-https nil)
+
 (defvar local-dir "{{ local_dir }}")
 (setq load-path (append (list "." local-dir) load-path ))
 (load "{{ local_file }}")
@@ -18,7 +20,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ansible-vault rust-mode load-env-vars yagist gist default-text-scale edit-server markdown-mode go-mode yaml-mode wiki-summary terraform-mode ssh-config-mode markdown-toc markdown-mode+ magit json-mode jq-mode jinja2-mode dockerfile-mode blank-mode ansible-doc ansible)))
+    (ansible ansible-doc ansible-vault blank-mode default-text-scale dockerfile-mode edit-server gist go-mode jinja2-mode jq-mode json-mode jsonnet-mode load-env-vars magit magithub magit-section markdown-mode markdown-mode+ markdown-toc rust-mode ssh-config-mode terraform-mode wiki-summary yagist yaml-mode)))
  '(safe-local-variable-values
    (quote
     ((mod . conf)
