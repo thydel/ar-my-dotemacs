@@ -17,6 +17,18 @@
 (setq version-control t)
 (setq delete-old-versions t)
 
+;;; https://emacs.stackexchange.com/questions/30454/how-to-make-emacs-prompt-me-before-closing-the-last-emacs-gui-frame-when-running
+(defun ask-before-closing ()
+  "Close only if y was pressed."
+  (interactive)
+  (unwind-protect
+      (if (y-or-n-p (format "Are you sure you want to close this frame? "))
+          (delete-frame)
+        (message "Canceled frame close"))
+    (message "Other frame closed")))
+(when (daemonp) (global-set-key (kbd "C-x C-c") 'ask-before-closing))
+;;;
+
 (if (> emacs-major-version 24)(setq comint-use-prompt-regexp "^[^ ]*[\\$#]"))
 
 ;; requires '{ "TERM":"xterm-256", CHROMEBOOKS:"cb5" }' in chrome secure shell profile on client
@@ -33,7 +45,7 @@
 ;;;;;;;;;;;;;;;;
 ; 
 ; googled timeout waiting for property-notify event
-; found	http://emacs.1067599.n5.nabble.com/bug-13486-24-2-92-large-X-selections-timed-out-waiting-for-property-notify-event-td275798.html#a286215
+; found http://emacs.1067599.n5.nabble.com/bug-13486-24-2-92-large-X-selections-timed-out-waiting-for-property-notify-event-td275798.html#a286215
 ;
 ;; I don't think there's any way to fix this; you will have to customize `select-active-regions' to nil.
 ;; 
@@ -62,8 +74,8 @@
 
 (setq frame-title-format
       '(multiple-frames
-	("%b" (server-name ("+" server-name)))
-	("" invocation-name "@" system-name (server-name ("+" server-name)))))
+        ("%b" (server-name ("+" server-name)))
+        ("" invocation-name "@" system-name (server-name ("+" server-name)))))
 
 ;(cond ((equal server-name "epi") (set-face-foreground 'modeline "red")))
 
@@ -82,7 +94,7 @@
 (require 'comint)
 (setq comint-password-prompt-regexp
       (concat comint-password-prompt-regexp
-	      "\\|^SUDO password: \\|^Enter passphrase for key .*: \\|^Retype password for .*: "))
+              "\\|^SUDO password: \\|^Enter passphrase for key .*: \\|^Retype password for .*: "))
 
 ;;;;;;;;;;;;;;;;
 
@@ -288,3 +300,7 @@
 ;; jq-mode
 
 (add-hook 'jq-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; End:
