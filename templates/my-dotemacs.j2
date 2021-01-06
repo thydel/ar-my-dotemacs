@@ -301,6 +301,11 @@
 
 (add-hook 'jq-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
+;; Unicode
+
+(require 'unicode-fonts)
+(unicode-fonts-setup)
+
 ;; Local Variables:
 ;; indent-tabs-mode: nil
 ;; End:
